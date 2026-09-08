@@ -88,6 +88,7 @@ jobs:
             echo "State changed. Committing updated monitor_state.json..."
             git add monitor_state.json
             git commit -m "chore: update cinema monitor state"
+            git pull --rebase origin main || true
             git push
           else
             echo "No state changes to commit."
