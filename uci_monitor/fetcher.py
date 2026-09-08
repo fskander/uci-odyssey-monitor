@@ -88,7 +88,7 @@ class ScheduleFetcher:
                     impersonate="chrome124",
                     headers=self.BROWSER_HEADERS,
                     timeout=self.timeout,
-                    follow_redirects=True,
+                    allow_redirects=True,
                 )
                 if r.status_code == 200 and len(r.text) > 10000:
                     logger.info("Successfully fetched %d bytes via curl_cffi from %s", len(r.text), target)
@@ -163,8 +163,11 @@ class ScheduleFetcher:
                     )
                     page = context.new_page()
                     page.goto(target, wait_until="domcontentloaded", timeout=self.timeout * 1000)
-                    # Wait slightly for any Cloudflare challenge resolution if needed
-                    page.wait_for_timeout(3000)
+                    # Wait for cloudflare challenge and schedule badges
+                    try:
+                        page.wait_for_selector(".badge-performance, [data-film-id], h2", timeout=12000)
+                    except Exception:
+                        page.wait_for_timeout(5000)
                     content = page.content()
                     browser.close()
 
