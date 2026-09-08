@@ -77,7 +77,7 @@ jobs:
           if [ "${{ github.event.inputs.notify_existing }}" = "true" ]; then
             EXTRA_FLAGS="--notify-existing"
           fi
-          if [ -n "$PROXY_URL" ]; then
+          if [ -n "$PROXY_URL" ] && [ -z "$WIREGUARD_CONFIG" ]; then
             EXTRA_FLAGS="$EXTRA_FLAGS --proxy $PROXY_URL"
           fi
 
