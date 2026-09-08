@@ -51,8 +51,9 @@ jobs:
         env:
           WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq wireguard resolvconf
-          echo "$WIREGUARD_CONFIG" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          sudo apt-get install -y -qq wireguard-tools
+          # Strip DNS directive so runner's DNS is not locked to unreachable home IP upon disconnect
+          echo "$WIREGUARD_CONFIG" | grep -v -i '^DNS' | sudo tee /etc/wireguard/wg0.conf > /dev/null
           sudo chmod 600 /etc/wireguard/wg0.conf
           sudo wg-quick up wg0
           echo "Connected! Outbound residential IP via home FRITZ!Box:"
