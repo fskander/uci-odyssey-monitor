@@ -40,12 +40,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
-      - name: Install Browser & Cloudflare Bypass Engines
+      - name: Install Python Dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          playwright install chromium --with-deps
 
       - name: Connect to Home WireGuard (FRITZ!Box)
         if: env.WIREGUARD_CONFIG != ''
