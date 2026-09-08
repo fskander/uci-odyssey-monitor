@@ -28,7 +28,7 @@ jobs:
   check-schedule:
     name: Check UCI Luxe Schedule
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
 
     steps:
       - name: Checkout Repository
@@ -46,32 +46,31 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Connect to Home WireGuard (FRITZ!Box)
-        if: env.WIREGUARD_CONFIG != ''
-        env:
-          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
-        run: |
-          sudo apt-get install -y -qq wireguard-tools
-          # Strip DNS directive so runner's DNS is not locked to unreachable home IP upon disconnect
-          echo "$WIREGUARD_CONFIG" | grep -v -i '^DNS' | sudo tee /etc/wireguard/wg0.conf > /dev/null
-          sudo chmod 600 /etc/wireguard/wg0.conf
-          sudo wg-quick up wg0
-          echo "Connected! Outbound residential IP via home FRITZ!Box:"
-          curl -s https://ifconfig.me
-          echo ""
-
-      - name: Run UCI Schedule Monitor
+      - name: Check UCI Schedule via Home WireGuard
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || 'uci-luxe-odyssey-imax' }}
           NTFY_SERVER: ${{ secrets.NTFY_SERVER || 'https://ntfy.sh' }}
+          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
         run: |
-          # 1. If manual trigger with test_notification requested, dispatch test alert
+          # 1. Connect WireGuard if configured
+          if [ -n "$WIREGUARD_CONFIG" ]; then
+            sudo apt-get install -y -qq wireguard resolvconf
+            # Backup pristine system resolv.conf
+            sudo cp /etc/resolv.conf /tmp/system_resolv.conf
+            trap 'sudo wg-quick down wg0 2>/dev/null || true; sudo cp /tmp/system_resolv.conf /etc/resolv.conf 2>/dev/null || true' EXIT
+            echo "$WIREGUARD_CONFIG" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+            sudo chmod 600 /etc/wireguard/wg0.conf
+            sudo wg-quick up wg0
+            echo "Connected via home FRITZ!Box: $(curl -s --max-time 5 https://ifconfig.me)"
+          fi
+
+          # 2. If manual trigger with test_notification requested, dispatch test alert
           if [ "${{ github.event.inputs.test_notification }}" = "true" ]; then
             echo "Dispatching test notification to ntfy topic: $NTFY_TOPIC..."
             python3 main.py --test-notify --ntfy-topic "$NTFY_TOPIC" --ntfy-server "$NTFY_SERVER"
           fi
 
-          # 2. Build flags for schedule check
+          # 3. Build flags for schedule check
           EXTRA_FLAGS=""
           if [ "${{ github.event.inputs.notify_existing }}" = "true" ]; then
             EXTRA_FLAGS="--notify-existing"
@@ -79,6 +78,13 @@ jobs:
 
           echo "Running schedule check against UCI Kinowelt..."
           python3 main.py --once --no-desktop --ntfy-topic "$NTFY_TOPIC" --ntfy-server "$NTFY_SERVER" $EXTRA_FLAGS
+
+          # 4. Disconnect WireGuard immediately & restore native system DNS
+          if [ -n "$WIREGUARD_CONFIG" ]; then
+            sudo wg-quick down wg0 || true
+            sudo cp /tmp/system_resolv.conf /etc/resolv.conf || true
+            echo "WireGuard disconnected & native DNS cleanly restored."
+          fi
 
       - name: Commit and Push Updated State
         run: |
@@ -96,10 +102,3 @@ jobs:
           else
             echo "No state changes to commit."
           fi
-
-      - name: Disconnect WireGuard
-        if: always() && env.WIREGUARD_CONFIG != ''
-        env:
-          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
-        run: |
-          sudo wg-quick down wg0 || true
