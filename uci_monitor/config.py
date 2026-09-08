@@ -24,6 +24,7 @@ class MonitorConfig:
     exclude_german_dub: bool = True
     ntfy_server: str = "https://ntfy.sh"
     ntfy_topic: str = "uci-luxe-odyssey-imax"
+    proxy_url: Optional[str] = None
     polling_interval: int = 300
     state_file: str = "monitor_state.json"
     enable_desktop_notifications: bool = True
@@ -60,6 +61,8 @@ class MonitorConfig:
             cfg.ntfy_topic = os.environ["NTFY_TOPIC"]
         if os.environ.get("NTFY_SERVER"):
             cfg.ntfy_server = os.environ["NTFY_SERVER"]
+        if os.environ.get("PROXY_URL"):
+            cfg.proxy_url = os.environ["PROXY_URL"]
         if os.environ.get("UCI_POLL_INTERVAL"):
             try:
                 cfg.polling_interval = int(os.environ["UCI_POLL_INTERVAL"])

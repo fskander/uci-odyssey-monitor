@@ -35,6 +35,7 @@ class CinemaBookingMonitor:
             cinema_url=self.config.cinema_url,
             film_url=self.config.film_page_url,
             user_agent=self.config.user_agent,
+            proxy_url=self.config.proxy_url,
             timeout=self.config.request_timeout,
         )
         self.parser = CinemaScheduleParser(

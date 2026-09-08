@@ -52,12 +52,14 @@ class ScheduleFetcher:
         cinema_url: str = "https://www.uci-kinowelt.de/kinoprogramm/berlin-east-side-gallery",
         film_url: Optional[str] = "https://www.uci-kinowelt.de/film/die-odyssee/407923/berlin-east-side-gallery/82",
         user_agent: Optional[str] = None,
+        proxy_url: Optional[str] = None,
         timeout: int = 25,
         max_retries: int = 3,
         retry_delay: float = 2.0,
     ):
         self.cinema_url = cinema_url
         self.film_url = film_url
+        self.proxy_url = proxy_url
         self.timeout = timeout
         self.max_retries = max_retries
         self.retry_delay = retry_delay
@@ -83,12 +85,14 @@ class ScheduleFetcher:
         if HAS_CURL_CFFI:
             try:
                 logger.debug("Attempting fetch with curl_cffi (Chrome impersonation)...")
+                proxies = {"http": self.proxy_url, "https": self.proxy_url} if self.proxy_url else None
                 r = cffi_requests.get(
                     target,
                     impersonate="chrome124",
                     headers=self.BROWSER_HEADERS,
                     timeout=self.timeout,
                     allow_redirects=True,
+                    proxies=proxies,
                 )
                 if r.status_code == 200 and len(r.text) > 10000:
                     logger.info("Successfully fetched %d bytes via curl_cffi from %s", len(r.text), target)
@@ -103,7 +107,10 @@ class ScheduleFetcher:
         for attempt in range(1, self.max_retries + 1):
             try:
                 req = urllib.request.Request(target, headers=self.BROWSER_HEADERS)
-                with urllib.request.urlopen(req, timeout=self.timeout) as response:
+                opener = urllib.request.build_opener()
+                if self.proxy_url:
+                    opener.add_handler(urllib.request.ProxyHandler({"http": self.proxy_url, "https": self.proxy_url}))
+                with opener.open(req, timeout=self.timeout) as response:
                     content = response.read().decode("utf-8", errors="replace")
                     logger.info("Successfully fetched %d bytes (HTTP %s) via urllib from %s", len(content), response.status, target)
                     return content
@@ -137,8 +144,11 @@ class ScheduleFetcher:
                 "-H", f"User-Agent: {self.BROWSER_HEADERS['User-Agent']}",
                 "-H", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                 "-H", "Accept-Language: de-DE,de;q=0.9,en-US;q=0.8",
-                target,
             ]
+            if self.proxy_url:
+                cmd += ["-x", self.proxy_url]
+            cmd.append(target)
+
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=self.timeout + 5)
             if result.returncode == 0 and len(result.stdout) > 10000 and "<html" in result.stdout.lower():
                 logger.info("Successfully fetched %d bytes via curl subprocess from %s", len(result.stdout), target)
@@ -153,17 +163,20 @@ class ScheduleFetcher:
             try:
                 logger.info("Attempting fetch with Playwright headless Chromium to bypass Cloudflare...")
                 with sync_playwright() as p:
-                    browser = p.chromium.launch(
-                        headless=True,
-                        args=["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
-                    )
+                    launch_kwargs = {
+                        "headless": True,
+                        "args": ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+                    }
+                    if self.proxy_url:
+                        launch_kwargs["proxy"] = {"server": self.proxy_url}
+
+                    browser = p.chromium.launch(**launch_kwargs)
                     context = browser.new_context(
                         user_agent=self.BROWSER_HEADERS["User-Agent"],
                         locale="de-DE",
                     )
                     page = context.new_page()
                     page.goto(target, wait_until="domcontentloaded", timeout=self.timeout * 1000)
-                    # Wait for cloudflare challenge and schedule badges
                     try:
                         page.wait_for_selector(".badge-performance, [data-film-id], h2", timeout=12000)
                     except Exception:

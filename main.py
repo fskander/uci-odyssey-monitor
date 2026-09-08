@@ -82,6 +82,12 @@ Examples:
         help="ntfy server URL (default: https://ntfy.sh)",
     )
     parser.add_argument(
+        "--proxy",
+        type=str,
+        default=None,
+        help="Proxy URL (e.g. socks5://user:pass@de.socks.nordvpn.com:1080 or http://...)",
+    )
+    parser.add_argument(
         "--interval",
         type=int,
         default=None,
@@ -145,6 +151,8 @@ def main():
         config.ntfy_topic = args.ntfy_topic
     if args.ntfy_server:
         config.ntfy_server = args.ntfy_server
+    if args.proxy:
+        config.proxy_url = args.proxy
     if args.interval:
         config.polling_interval = args.interval
     if args.no_desktop:
