@@ -64,7 +64,6 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || 'uci-luxe-odyssey-imax' }}
           NTFY_SERVER: ${{ secrets.NTFY_SERVER || 'https://ntfy.sh' }}
-          PROXY_URL: ${{ secrets.PROXY_URL }}
         run: |
           # 1. If manual trigger with test_notification requested, dispatch test alert
           if [ "${{ github.event.inputs.test_notification }}" = "true" ]; then
@@ -76,9 +75,6 @@ jobs:
           EXTRA_FLAGS=""
           if [ "${{ github.event.inputs.notify_existing }}" = "true" ]; then
             EXTRA_FLAGS="--notify-existing"
-          fi
-          if [ -n "$PROXY_URL" ] && [ -z "$WIREGUARD_CONFIG" ]; then
-            EXTRA_FLAGS="$EXTRA_FLAGS --proxy $PROXY_URL"
           fi
 
           echo "Running schedule check against UCI Kinowelt..."
