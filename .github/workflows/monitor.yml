@@ -47,6 +47,19 @@ jobs:
           pip install -r requirements.txt
           playwright install chromium --with-deps
 
+      - name: Connect to Home WireGuard (FRITZ!Box)
+        if: env.WIREGUARD_CONFIG != ''
+        env:
+          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq wireguard resolvconf
+          echo "$WIREGUARD_CONFIG" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          sudo chmod 600 /etc/wireguard/wg0.conf
+          sudo wg-quick up wg0
+          echo "Connected! Outbound residential IP via home FRITZ!Box:"
+          curl -s https://ifconfig.me
+          echo ""
+
       - name: Run UCI Schedule Monitor
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || 'uci-luxe-odyssey-imax' }}
@@ -83,3 +96,10 @@ jobs:
           else
             echo "No state changes to commit."
           fi
+
+      - name: Disconnect WireGuard
+        if: always() && env.WIREGUARD_CONFIG != ''
+        env:
+          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
+        run: |
+          sudo wg-quick down wg0 || true
