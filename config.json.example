@@ -1,0 +1,19 @@
+{
+  "cinema_url": "https://www.uci-kinowelt.de/kinoprogramm/berlin-east-side-gallery",
+  "film_page_url": "https://www.uci-kinowelt.de/film/die-odyssee/407923/berlin-east-side-gallery/82",
+  "cinema_id": "82",
+  "cinema_name": "UCI Luxe East Side Gallery, Berlin",
+  "target_titles": ["The Odyssey", "Die Odyssee"],
+  "target_film_id": "407923",
+  "require_imax": true,
+  "require_omu": true,
+  "exclude_isense": true,
+  "exclude_german_dub": true,
+  "ntfy_server": "https://ntfy.sh",
+  "ntfy_topic": "uci-luxe-odyssey-imax",
+  "polling_interval": 300,
+  "state_file": "monitor_state.json",
+  "enable_desktop_notifications": true,
+  "notify_existing": false,
+  "request_timeout": 20
+}

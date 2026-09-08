@@ -1,0 +1,51 @@
+name: UCI Luxe Cinema Schedule Monitor
+
+on:
+  schedule:
+    # Run every 10 minutes, 24/7
+    - cron: "*/10 * * * *"
+  workflow_dispatch: # Allows manual trigger from GitHub web UI at any time
+
+permissions:
+  contents: write # Needed to commit monitor_state.json back to repo
+
+concurrency:
+  group: cinema-monitor
+  cancel-in-progress: false
+
+jobs:
+  check-schedule:
+    name: Check UCI Luxe Schedule
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run UCI Schedule Monitor
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || 'uci-luxe-odyssey-imax' }}
+          NTFY_SERVER: ${{ secrets.NTFY_SERVER || 'https://ntfy.sh' }}
+        run: |
+          python3 main.py --once --no-desktop --ntfy-topic "$NTFY_TOPIC" --ntfy-server "$NTFY_SERVER"
+
+      - name: Commit and Push Updated State
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [[ -n $(git status --porcelain monitor_state.json) ]]; then
+            echo "State changed. Committing updated monitor_state.json..."
+            git add monitor_state.json
+            git commit -m "chore: update monitor state [skip ci]"
+            git push
+          else
+            echo "No state changes to commit."
+          fi
