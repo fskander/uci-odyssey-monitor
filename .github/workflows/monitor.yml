@@ -10,7 +10,7 @@ on:
         description: "Send test notification to verify delivery to your phone"
         required: false
         type: boolean
-        default: true
+        default: false
       notify_existing:
         description: "Also alert on currently available IMAX OmU sessions"
         required: false
