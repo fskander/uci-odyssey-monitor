@@ -87,9 +87,12 @@ jobs:
           if [[ -n $(git status --porcelain monitor_state.json) ]]; then
             echo "State changed. Committing updated monitor_state.json..."
             git add monitor_state.json
-            git commit -m "chore: update cinema monitor state"
-            git pull --rebase origin main || true
-            git push
+            git commit -m "chore: update cinema monitor state" || true
+            for attempt in 1 2 3; do
+              git push && break || true
+              echo "Push rejected, syncing with remote (attempt $attempt)..."
+              git pull --rebase -X theirs origin main || (git rebase --abort && git pull -X theirs origin main || true)
+            done
           else
             echo "No state changes to commit."
           fi
