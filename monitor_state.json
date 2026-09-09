@@ -1,5 +1,5 @@
 {
-  "last_check_timestamp": "2026-09-09T16:01:13.953386+00:00",
+  "last_check_timestamp": "2026-09-09T16:15:39.024989+00:00",
   "total_known_performances": 6,
   "known_performances": {
     "DC5F1000023ZIQERCX": {
@@ -17,7 +17,7 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/DC5F1000023ZIQERCX/siteId/82/945069",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=DC5F1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-08T18:44:31.614027+00:00",
-      "last_seen": "2026-09-09T16:01:13.953347+00:00"
+      "last_seen": "2026-09-09T16:15:39.024954+00:00"
     },
     "EC5F1000023ZIQERCX": {
       "performance_id": "EC5F1000023ZIQERCX",
@@ -34,7 +34,7 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/EC5F1000023ZIQERCX/siteId/82/945132",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=EC5F1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-08T18:44:31.614027+00:00",
-      "last_seen": "2026-09-09T16:01:13.953347+00:00"
+      "last_seen": "2026-09-09T16:15:39.024954+00:00"
     },
     "FC5F1000023ZIQERCX": {
       "performance_id": "FC5F1000023ZIQERCX",
@@ -51,7 +51,7 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/FC5F1000023ZIQERCX/siteId/82/945176",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=FC5F1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-08T18:44:31.614027+00:00",
-      "last_seen": "2026-09-09T16:01:13.953347+00:00"
+      "last_seen": "2026-09-09T16:15:39.024954+00:00"
     },
     "0D5F1000023ZIQERCX": {
       "performance_id": "0D5F1000023ZIQERCX",
@@ -68,7 +68,7 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/0D5F1000023ZIQERCX/siteId/82/945240",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=0D5F1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-08T18:44:31.614027+00:00",
-      "last_seen": "2026-09-09T16:01:13.953347+00:00"
+      "last_seen": "2026-09-09T16:15:39.024954+00:00"
     },
     "1D5F1000023ZIQERCX": {
       "performance_id": "1D5F1000023ZIQERCX",
@@ -85,7 +85,7 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/1D5F1000023ZIQERCX/siteId/82/945291",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=1D5F1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-08T18:44:31.614027+00:00",
-      "last_seen": "2026-09-09T16:01:13.953347+00:00"
+      "last_seen": "2026-09-09T16:15:39.024954+00:00"
     },
     "2D5F1000023ZIQERCX": {
       "performance_id": "2D5F1000023ZIQERCX",
@@ -102,7 +102,7 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/2D5F1000023ZIQERCX/siteId/82/945366",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=2D5F1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-08T18:44:31.614027+00:00",
-      "last_seen": "2026-09-09T16:01:13.953347+00:00"
+      "last_seen": "2026-09-09T16:15:39.024954+00:00"
     }
   }
 }
