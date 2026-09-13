@@ -22,7 +22,7 @@ permissions:
 
 concurrency:
   group: cinema-monitor
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   check-schedule:
