@@ -1,6 +1,6 @@
 {
-  "last_check_timestamp": "2026-09-14T15:10:35.470306+00:00",
-  "total_known_performances": 6,
+  "last_check_timestamp": "2026-09-14T15:20:43.320241+00:00",
+  "total_known_performances": 11,
   "known_performances": {
     "DC5F1000023ZIQERCX": {
       "performance_id": "DC5F1000023ZIQERCX",
@@ -102,7 +102,87 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/2D5F1000023ZIQERCX/siteId/82/945366",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=2D5F1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-08T18:44:31.614027+00:00",
-      "last_seen": "2026-09-14T15:10:35.470278+00:00"
+      "last_seen": "2026-09-14T15:20:43.320196+00:00"
+    },
+    "C97F1000023ZIQERCX": {
+      "performance_id": "C97F1000023ZIQERCX",
+      "film_id": "407923",
+      "film_title": "Die Odyssee",
+      "date": "2026-09-17",
+      "time": "14:00",
+      "auditorium": "Kino 01 IMAX",
+      "cinema_name": "Berlin - East Side Gallery | Luxe",
+      "site_id": "82",
+      "version_raw": "imax|omu|2d|465",
+      "subtext": "OmU",
+      "booking_path": "/kino-buchung/performanceId/C97F1000023ZIQERCX/siteId/82/964454",
+      "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/C97F1000023ZIQERCX/siteId/82/964454",
+      "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=C97F1000023ZIQERCX&site_id=82",
+      "first_seen": "2026-09-14T15:20:43.320196+00:00"
+    },
+    "D97F1000023ZIQERCX": {
+      "performance_id": "D97F1000023ZIQERCX",
+      "film_id": "407923",
+      "film_title": "Die Odyssee",
+      "date": "2026-09-18",
+      "time": "14:00",
+      "auditorium": "Kino 01 IMAX",
+      "cinema_name": "Berlin - East Side Gallery | Luxe",
+      "site_id": "82",
+      "version_raw": "imax|omu|2d|465",
+      "subtext": "OmU",
+      "booking_path": "/kino-buchung/performanceId/D97F1000023ZIQERCX/siteId/82/964509",
+      "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/D97F1000023ZIQERCX/siteId/82/964509",
+      "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=D97F1000023ZIQERCX&site_id=82",
+      "first_seen": "2026-09-14T15:20:43.320196+00:00"
+    },
+    "E97F1000023ZIQERCX": {
+      "performance_id": "E97F1000023ZIQERCX",
+      "film_id": "407923",
+      "film_title": "Die Odyssee",
+      "date": "2026-09-21",
+      "time": "14:00",
+      "auditorium": "Kino 01 IMAX",
+      "cinema_name": "Berlin - East Side Gallery | Luxe",
+      "site_id": "82",
+      "version_raw": "imax|omu|2d|465",
+      "subtext": "OmU",
+      "booking_path": "/kino-buchung/performanceId/E97F1000023ZIQERCX/siteId/82/964687",
+      "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/E97F1000023ZIQERCX/siteId/82/964687",
+      "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=E97F1000023ZIQERCX&site_id=82",
+      "first_seen": "2026-09-14T15:20:43.320196+00:00"
+    },
+    "F97F1000023ZIQERCX": {
+      "performance_id": "F97F1000023ZIQERCX",
+      "film_id": "407923",
+      "film_title": "Die Odyssee",
+      "date": "2026-09-22",
+      "time": "14:00",
+      "auditorium": "Kino 01 IMAX",
+      "cinema_name": "Berlin - East Side Gallery | Luxe",
+      "site_id": "82",
+      "version_raw": "imax|omu|2d|465",
+      "subtext": "OmU",
+      "booking_path": "/kino-buchung/performanceId/F97F1000023ZIQERCX/siteId/82/964730",
+      "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/F97F1000023ZIQERCX/siteId/82/964730",
+      "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=F97F1000023ZIQERCX&site_id=82",
+      "first_seen": "2026-09-14T15:20:43.320196+00:00"
+    },
+    "0A7F1000023ZIQERCX": {
+      "performance_id": "0A7F1000023ZIQERCX",
+      "film_id": "407923",
+      "film_title": "Die Odyssee",
+      "date": "2026-09-23",
+      "time": "14:00",
+      "auditorium": "Kino 01 IMAX",
+      "cinema_name": "Berlin - East Side Gallery | Luxe",
+      "site_id": "82",
+      "version_raw": "imax|omu|2d|465",
+      "subtext": "OmU",
+      "booking_path": "/kino-buchung/performanceId/0A7F1000023ZIQERCX/siteId/82/964756",
+      "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/0A7F1000023ZIQERCX/siteId/82/964756",
+      "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=0A7F1000023ZIQERCX&site_id=82",
+      "first_seen": "2026-09-14T15:20:43.320196+00:00"
     }
   }
 }
