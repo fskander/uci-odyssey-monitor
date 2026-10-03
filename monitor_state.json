@@ -1,5 +1,5 @@
 {
-  "last_check_timestamp": "2026-10-03T17:38:16.164292+00:00",
+  "last_check_timestamp": "2026-10-03T20:13:02.571847+00:00",
   "total_known_performances": 12,
   "known_performances": {
     "DC5F1000023ZIQERCX": {
@@ -204,7 +204,7 @@
       "booking_url": "https://www.uci-kinowelt.de/kino-buchung/performanceId/85AF1000023ZIQERCX/siteId/82/997183",
       "direct_booking_url": "https://buchung.uci-kinowelt.de/?perf_id=85AF1000023ZIQERCX&site_id=82",
       "first_seen": "2026-09-28T22:23:25.860614+00:00",
-      "last_seen": "2026-10-03T17:38:16.164269+00:00"
+      "last_seen": "2026-10-03T20:13:02.571825+00:00"
     }
   }
 }
